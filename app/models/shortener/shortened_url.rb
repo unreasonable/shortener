@@ -145,6 +145,7 @@ class Shortener::ShortenedUrl < ActiveRecord::Base
       super()
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid => err
       logger.info("Failed to generate ShortenedUrl with unique_key: #{unique_key}")
+      logger.info(err.message)
       self.unique_key = nil
       if (count +=1) < 5
         logger.info("retrying with different unique key")
